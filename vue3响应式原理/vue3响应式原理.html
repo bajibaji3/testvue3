@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script>
+      //模拟vue3中实现响应式
+      let person = {
+        name: '张三',
+        age: 23
+      }
+      //p代理person
+      const p = new Proxy(person, {
+        //读取
+        get(target, propName) {
+          console.log(`有人读取了p身上的${propName}属性`);
+          // return target[propName];
+          //通过Reflect反射对象对被代理的对象属性进行操作
+          return Reflect.get(target, propName);
+        },
+        //修改或添加
+        set(target, propName, value) {
+          console.log(`有人修改了p身上的${propName}属性，去修改界面`);
+          // target[propName] = value;
+          Reflect.set(target, propName, value);
+        },
+        //删除
+        deleteProperty(target, propName) {
+          console.log(`有人删除了p身上的${propName}属性，去修改界面`);
+          // return delete target[propName];
+          return Reflect.deleteProperty(target, propName);
+        }
+      })
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
